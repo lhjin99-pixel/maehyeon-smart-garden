@@ -21,7 +21,8 @@ import io
 활동목록 = ["물주기", "잡초제거", "관찰", "정리", "비료/퇴비", "기록정리", "기타"]
 
 def 구글연결():
-    서비스정보 = st.secrets["google_service_account"]
+    import json
+    서비스정보 = json.loads(st.secrets["GOOGLE_SERVICE_ACCOUNT_JSON"])
     시트ID = st.secrets["GOOGLE_SHEET_ID"]
     폴더ID = st.secrets["DRIVE_FOLDER_ID"]
 
