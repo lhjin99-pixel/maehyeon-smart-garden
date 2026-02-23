@@ -21,12 +21,11 @@ import io
 활동목록 = ["물주기", "잡초제거", "관찰", "정리", "비료/퇴비", "기록정리", "기타"]
 
 def 구글연결():
-    import json
-    raw = st.secrets["GOOGLE_SERVICE_ACCOUNT_JSON"]
-    raw = raw.replace("\r\n", "\n")          # 줄바꿈 통일
-    raw = raw.replace("-----BEGIN PRIVATE KEY-----\n", "-----BEGIN PRIVATE KEY-----\\n")
-    raw = raw.replace("\n-----END PRIVATE KEY-----", "\\n-----END PRIVATE KEY-----")
-    서비스정보 = json.loads(raw)
+    import gspread
+    from google.oauth2.service_account import Credentials
+    from googleapiclient.discovery import build
+
+    서비스정보 = st.secrets["google_service_account"]
     시트ID = st.secrets["GOOGLE_SHEET_ID"]
     폴더ID = st.secrets["DRIVE_FOLDER_ID"]
 
@@ -41,7 +40,6 @@ def 구글연결():
     드라이브 = build("drive", "v3", credentials=인증)
 
     return 시트, 드라이브, 폴더ID
-
 
 @st.cache_data(ttl=30)
 def 학생명단불러오기():
