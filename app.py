@@ -22,7 +22,11 @@ import io
 
 def 구글연결():
     import json
-    서비스정보 = json.loads(st.secrets["GOOGLE_SERVICE_ACCOUNT_JSON"])
+    raw = st.secrets["GOOGLE_SERVICE_ACCOUNT_JSON"]
+    raw = raw.replace("\r\n", "\n")          # 줄바꿈 통일
+    raw = raw.replace("-----BEGIN PRIVATE KEY-----\n", "-----BEGIN PRIVATE KEY-----\\n")
+    raw = raw.replace("\n-----END PRIVATE KEY-----", "\\n-----END PRIVATE KEY-----")
+    서비스정보 = json.loads(raw)
     시트ID = st.secrets["GOOGLE_SHEET_ID"]
     폴더ID = st.secrets["DRIVE_FOLDER_ID"]
 
